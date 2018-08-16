@@ -153,7 +153,7 @@
     }
 
     /**
-     * 获取cookie
+     * 删除cookie
      *
      * @param {string} key 键
      * @return {string} 删除cookie值
@@ -387,8 +387,8 @@
         //初始化参数
         version: '1.0.0',
         loadTime: (new Date).getTime(),
-        zca: null,
-        zcb: null,
+        repa: null,
+        repb: null,
         vid: null,
         referer: document.referrer || _win.location.href,
         twoYears: 365 * 2 * 24 * 60 * 60000,
@@ -421,8 +421,9 @@
         ],
         //可配置项
         config: {
-            url: 'http://localhost:3000/zc.gif',
+            url: 'http://localhost:3000/rep.gif',
             uid: undefined,
+            isClick: false,
             clickAttr: {
                 dom: [],
                 attr: []
@@ -431,8 +432,8 @@
         //程序初始化
         init: function () {
             let vm = this
-            vm.readZcaData()
-            vm.readZcbData()
+            vm.readrepaData()
+            vm.readrepbData()
             for (let i = 0; i < vm.eventList.length; i++) {
                 vm.on(vm.eventList[i].eventType, vm.eventList[i].eventName, eval('vm.' + vm.eventList[i].eventName + 'Event') || vm.noFun)
             }
@@ -461,12 +462,12 @@
         loadEvent: function () {
             let vm = nekyEeport
             let getData = (new Date).getTime()
-            vm.zcb = getData
+            vm.repb = getData
             vm.accessPath.push(_win.location.href)
             vm.startTime = getData
             vm.eventType = 'load'
-            vm.writeZcaData(vm)
-            vm.writeZcbData(vm)
+            vm.writerepaData(vm)
+            vm.writerepbData(vm)
             let param = vm.loadEventData(vm)
             vm.sendData(vm.compress(param))
         },
@@ -491,7 +492,7 @@
             let time = new Date().getTime() - vm.endTime;
             if(time <= 5) {
                 vm.eventType = 'unload'
-                removeCookie('_zcb')
+                removeCookie('_repb')
             }
             let param = vm.beforeunloadData(vm)
             if (vm.startTime) {
@@ -540,49 +541,48 @@
             return (this.loadTime.toString(36) + ("" + Math.random()).slice( - 8).toString(36).substr(2, 5))
         },
         //cookie生成
-        readZcaData: function () {
-            let _zca = getCookie("_zca");
-            if (_zca) {
-                let a = _zca.split(".");
-                a.length == 6 && (this.zca = a)
+        readrepaData: function () {
+            let _repa = getCookie("_repa");
+            if (_repa) {
+                let a = _repa.split(".");
+                a.length == 6 && (this.repa = a)
             }
-            if (!this.zca) {
+            if (!this.repa) {
                 let time = this.loadTime;
-                this.zca = [time, this.setUid().toString(36), time, time, 0, 0]
-                setCookie('_zca', this.zca.join(".") , this.twoYears)
+                this.repa = [time, this.setUid().toString(36), time, time, 0, 0]
+                setCookie('_repa', this.repa.join(".") , this.twoYears)
             }
         },
-        readZcbData: function () {
-            let _zcb = getCookie("_zcb");
-            if (_zcb) {
-                this.zcb = _zcb
+        readrepbData: function () {
+            let _repb = getCookie("_repb");
+            if (_repb) {
+                this.repb = _repb
             }
-            if (!this.zcb) {
-                this.zcb = this.loadTime
-                setCookie('_zcb', this.zcb , this.semih)
+            if (!this.repb) {
+                this.repb = this.loadTime
+                setCookie('_repb', this.repb , this.semih)
             }
         },
-        writeZcaData: function (vm) {
+        writerepaData: function (vm) {
             let b = (new Date).getTime()
-            vm.zca[5] = parseInt(vm.zca[5]) + 1
-            if (vm.zcb == vm.loadTime || (b - vm.zcb) > vm.semih) {
-                vm.zca[2] = vm.zca[3]
-                vm.zca[3] = b
-                vm.zca[4] = parseInt(vm.zca[4]) + 1
+            vm.repa[5] = parseInt(vm.repa[5]) + 1
+            if (vm.repb == vm.loadTime || (b - vm.repb) > vm.semih) {
+                vm.repa[2] = vm.repa[3]
+                vm.repa[3] = b
+                vm.repa[4] = parseInt(vm.repa[4]) + 1
             }
-            setCookie('_zca', vm.zca.join("."), vm.twoYears)
+            setCookie('_repa', vm.repa.join("."), vm.twoYears)
         },
-        writeZcbData: function (vm) {
-            setCookie('_zcb', vm.zcb , vm.semih)
+        writerepbData: function (vm) {
+            setCookie('_repb', vm.repb , vm.semih)
         },
         //数据提交
         fullPv: function () {
-            this.vid = this.zca[0] + '.' + this.zca[1]
-            return this.zca[0] + '.' + this.zca[1] + '.' + this.zca[4] + '.' + this.zca[5]
+            this.vid = this.repa[0] + '.' + this.repa[1]
+            return this.repa[0] + '.' + this.repa[1] + '.' + this.repa[4] + '.' + this.repa[5]
         },
         compress: function (param) {
             let data = {
-                jv: this.version,
                 device: this.browserInfo.device,
                 os: this.browserInfo.os + " " + this.browserInfo.osVersion,
                 browser: this.browserInfo.browser + " " + this.browserInfo.version,
@@ -596,9 +596,20 @@
             }
             return parseParam(mergeJSON(data,param))
         },
+        impressionData: function (param) {
+            let vm = nekyEeport
+            let data = {
+                eventType: 'impression',
+                pageUrl: _win.location.href,
+                time: (new Date).getTime(),
+                pv: vm.fullPv()
+            }
+            return vm.sendData(parseParam(mergeJSON(data,param)))
+        },
         basicData: function (param) {
             this.vid ? param += '&vid=' + this.vid : ''
             this.config.uid ? param += '&uid=' + this.config.uid : ''
+            this.version ? param += '&jv=' + this.version : ''
             // this.accessPath.length > 0 ? param += '&accessPath=' + this.accessPath.join(',') : ''
             return param
         },
@@ -617,11 +628,16 @@
             let vm = nekyEeport
             if ("readystatechange" === event.type ) {
                 // console.log('请求状态码改变')
-                if (target.readyState == 2) {
+                if (target.readyState == 4) {
                     if (target.status == 200) {
                         for (let i = 0; i < vm.apiData.length; i++) {
-                            console.log(event)
-                            vm.apiData[i].apiFun({a:1})
+                            if (_win.location.origin + '/' + vm.apiData[i].apiName == target.responseURL) {
+                                try {
+                                    vm.impressionData(vm.apiData[i].apiFun(JSON.parse(target.response)))
+                                } catch (error) {
+                                    vm.impressionData(vm.apiData[i].apiFun(target.response))
+                                }
+                            }
                         }
                     }
                 }

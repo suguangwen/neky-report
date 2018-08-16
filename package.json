@@ -1,6 +1,6 @@
 {
-  "name": "neky-report",
-  "version": "1.0.1",
+  "name": "neky-report-zc",
+  "version": "1.0.0",
   "description": "前端无痕埋点，用户行为监控，访客识别，UAT方案。",
   "main": "src/index.js",
   "repository": {
@@ -8,5 +8,12 @@
     "url": "git+https://github.com/suguangwen/neky-report.git"
   },
   "author": "suguangwen",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suguangwen/neky-report/issues"
+  },
+  "homepage": "https://github.com/suguangwen/neky-report#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
