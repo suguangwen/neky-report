@@ -9,11 +9,11 @@
     <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.js"></script>
 </head>
 <body>
-    <a data-url='aUrl' data-src='aSrc'>a链接点击</a>
+    <a data-url='aUrl' data-src='aSrc'><div>a链接点击</div></a>
     <div>
-            <div data-url='divUrl' data-src='divSrc'>div链接点击</div>
-            <a data-url='aUrl' data-src='aSrc'>a链接点击</a>
-            <a data-url='aUrl' data-src='aSrc'>a链接点击</a>
+            <div class="aaa bbb" data-url='divUrl' data-src='divSrc'>div链接点击</div>
+            <a class="aaa" data-url='aUrl' data-src='aSrc'>a链接点击</a>
+            <a data-url='aUrl' href="111222" target="_blank" data-src='aSrc'>a链接点击</a>
     </div>
     <div data-url='divUrl' data-src='divSrc'>div链接点击</div>
 </body>
@@ -22,31 +22,43 @@
     let nekyRet = nekyEeport.init({ 
         url: 'http://localhost:3000/zc.gif',
         isClick: false,
+        uid: '',
         clickAttr: {
-            dom: ['a', 'div'],
+            // dom: ['div'],
+            noClassDom: ['a'],
+            // className: ['aaa'],
             attr: [{
-                objKey: 'objectId',
-                attrKey: 'data-url',
-                tag: 'a'
-            },{
-                objKey: 'objectId1',
-                attrKey: 'data-shop',
-                tag: 'a'
-            },{
-                objKey: 'productId',
+                objKey: 'clickId',
                 attrKey: 'data-src',
+                isUp: false,
+                tag: 'a div'
+            },{
+                objKey: 'href',
+                attrKey: 'href',
                 tag: 'a'
             },{
-                objKey: 'objectId',
+                objKey: 'clicksId',
                 attrKey: 'data-url',
-                tag: 'div'
-            }]
+                tag: 'a'
+            }],
+            fun: function (data) {
+                return data
+            }
         }
     })
     nekyRet.watchApi('a', function (data) {
         console.log('a')
         console.log(data)
     })
+    // nekyRet.setData({
+    //     uid: 123
+    // })
+    // nekyRet.watchRead(function () {
+    //     return {
+    //         a: 1,
+    //         b: 2
+    //     }
+    // })
     $.ajax({
 		type:'post',
         url:'/a',

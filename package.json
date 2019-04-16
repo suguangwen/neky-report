@@ -1,8 +1,8 @@
 {
   "name": "neky-report-zc",
-  "version": "1.0.0",
+  "version": "1.1.10",
   "description": "前端无痕埋点，用户行为监控，访客识别，UAT方案。",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/suguangwen/neky-report.git"
@@ -15,5 +15,16 @@
   "homepage": "https://github.com/suguangwen/neky-report#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "gulp-babel": "^8.0.0",
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^3.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^7.0.0-beta.3"
   }
 }

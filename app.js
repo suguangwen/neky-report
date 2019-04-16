@@ -6,8 +6,9 @@ http.createServer(function(req,res){
 	var path = req.url;	
 	if(path == "/"){
 		path = "/index.html";
+		sendFile(res,path);
 	}
-	sendFile(res,path);
+	
 }).listen(4000)
  
 function sendFile(res,path){
