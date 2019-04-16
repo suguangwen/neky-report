@@ -1,5 +1,5 @@
 {
-  "name": "neky-report-zc",
+  "name": "neky-report",
   "version": "1.1.11",
   "description": "前端无痕埋点，用户行为监控，访客识别，UAT方案。",
   "main": "dist/index.js",
