@@ -133,12 +133,6 @@ var nekyReport=  require('neky-report');
     采用00000+XXXX的方式来确认用户的唯一性。 
     例子：1532487238279.1f625pu     //唯一用户：1532487238279.1f625pu
     
-### 用户访问网站的次数：
-
-    用户访问网站后设置一个30分钟后过期的session（_zcb）
-    用户任何操作都将更新session（_zcb）
-    当session（_zcb）过期或者session（_zcb）不存在时时表示用户重新访问了一次网站
-    
 ### fullpv
 
     采用00000+XXXX+33333+44444的方式来确认用户完整的PV。
