@@ -40,7 +40,7 @@ var nekyReport=  require('neky-report');
 
 ```JavaScript
     let nekyRet = nekyEeport.init({ 
-        url: 'http://localhost:3000/zc.gif', //采集地址，采用发送一张1x1的图片带上参数进行数据采集
+        url: 'https://localhost:3000/zc.gif', //采集地址，采用发送一张1x1的图片带上参数进行数据采集
         isClick: false, //是否全量点击，监听整个页面所有的点击事件
         uid: '', //采集用户的ID，默认为空，用户数据也可在后续的回调中带上
         clickAttr: {
@@ -102,11 +102,11 @@ var nekyReport=  require('neky-report');
         //用户的屏幕分辨率
         screen: '970x1920',
         //用户当前访问的页面的URL
-        pageUrl: 'https://www.7atour.com/'',
+        pageUrl: 'https://localhost:3000/'',
         //用户的来源
-        referer: 'https://www.baidu.com/'',
+        referer: 'https://localhost:3000/'',
         //用户的访问路径
-        accessPath: https://www.baidu.com/, https://www.baidu.com/index, https://www.baidu.com/index/list,
+        accessPath: https://localhost:3000/, https://localhost:3000/index, https://localhost:3000/index/list,
         //用户浏览器语言
         language: 'zh-CN',
         //用户行为采集的时间
@@ -170,7 +170,7 @@ var nekyReport=  require('neky-report');
         //用户的设备是PC还是Mobile还是Tablet
         device: 'PC',
         //发生点击的页面
-        pageUrl: www.baidu.com
+        pageUrl: https://localhost:3000
         //点击点在页面的X轴
         pageX: 111,
         //点击点在页面的Y轴
@@ -180,7 +180,7 @@ var nekyReport=  require('neky-report');
 
     impression //页面展示
         //展示的页面
-        pageUrl: www.baidu.com
+        pageUrl: https://localhost:3000
         //展示的时间
         time: (new Date).getTime(),
         //展示的用户PV
